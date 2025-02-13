@@ -11,3 +11,249 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input-field {
+  @apply border border-gray-300 rounded-lg mt-0 text-sm p-2.5 bg-white max-w-[450px] w-full;
+}
+
+.input-field::placeholder {
+  @apply text-gray-300;
+}
+
+.input-field:focus-visible {
+  @apply outline-none;
+}
+
+.invoice-input-field {
+  @apply border border-gray-300 rounded-lg h-[42px] max-w-[450px] w-full;
+}
+
+.invoice-input-field::placeholder {
+  @apply text-gray-300 text-sm;
+}
+
+.invoice-input-field:focus-visible {
+  @apply outline-none;
+}
+
+.input-field-container {
+  @apply border border-gray-300 rounded-lg h-[42px] max-w-[450px] w-full;
+}
+
+.input-field-border {
+  @apply border-none rounded-lg mt-0 text-sm p-2.5 bg-white max-w-[350px] w-full;
+}
+
+.input-field-border::placeholder {
+  @apply text-gray-300;
+}
+
+.input-field-border:focus-visible {
+  @apply outline-none;
+}
+
+/* Custom Input Field Styles for React-Select */
+
+/* React Select Container */
+.react-select-container {
+  max-width: 450px;
+  width: 100%;
+}
+
+/* React Select Input Field */
+.react-select .react-select__input {
+  @apply border border-gray-300 rounded-lg mt-0 text-sm p-2.5 bg-white;
+}
+
+.react-select .react-select__input::placeholder {
+  @apply text-gray-300;
+}
+
+/* React Select Option */
+.react-select .react-select__option {
+  @apply text-sm py-2 px-4;
+}
+
+.react-select .react-select__option--is-focused {
+  @apply bg-gray-200;
+}
+
+.react-select .react-select__option--is-selected {
+  @apply bg-primary text-white;
+}
+
+/* FONT SIZES */
+.fs_11 {
+  font-size: 11px;
+}
+.fs_12 {
+  font-size: 12px;
+}
+.fs_14 {
+  font-size: 14px;
+}
+.fs_15 {
+  font-size: 15px;
+}
+.fs_16 {
+  font-size: 16px;
+}
+.fs_18 {
+  font-size: 18px;
+}
+.fs_20 {
+  font-size: 20px;
+}
+.fs_22 {
+  font-size: 22px;
+}
+.fs_26 {
+  font-size: 26px;
+}
+/* Added for login logo */
+.fs_32 {
+  font-size: 38px;
+}
+
+/* FONT WEIGHTS */
+.fw_100 {
+  font-weight: 100;
+}
+.fw_200 {
+  font-weight: 200;
+}
+
+.fw_300 {
+  font-weight: 300;
+}
+.fw_400 {
+  font-weight: 400;
+}
+.fw_500 {
+  font-weight: 500;
+}
+.fw_600 {
+  font-weight: 600;
+}
+.fw_700 {
+  font-weight: 700;
+}
+.fw_800 {
+  font-weight: 800;
+}
+.fw_900 {
+  font-weight: 900;
+}
+
+.table_search_input {
+  color: #344054;
+  font-weight: 600;
+}
+.table_search_input::placeholder {
+  /* font-size: 12px; */
+  color: #667085;
+}
+.table_search_input:focus-visible {
+  outline: none;
+}
+.input_border {
+  border: 1.55px solid #d0d5dd;
+}
+
+.custom-toast-success {
+  width: 400px;
+  background-color: #4caf50 !important; /* Green for success */
+  color: white !important;
+}
+
+.custom-toast-error {
+  width: 400px;
+  background-color: #f44336 !important; /* Red for error */
+  color: white !important;
+}
+
+.delay-0 {
+  animation-delay: 0s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* @keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 1s ease-in-out;
+} */
+
+@keyframes smoothFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.8);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-20px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.8s ease-in-out;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-600 {
+  animation-delay: 0.6s;
+}
