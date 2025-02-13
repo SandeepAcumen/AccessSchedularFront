@@ -2,26 +2,44 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../components/forms/inputFiled';
+import { migrateAccessToPsql } from '../components/apis/migrateApi';
 
 const Home = () => {
     const initialValues = {
-        access_db_path: '',
-        sql_sever_host: '',
-        sql_sever_database: '',
-        sql_sever_username: '',
-        sql_sever_password: '',
+        accessDbPath: '',
+        host: '',
+        database: '',
+        user: '',
+        password: '',
+        port: 5432,
     };
 
     const validationSchema = Yup.object({
-        access_db_path: Yup.string().required('Required!'),
-        sql_sever_host: Yup.string().required('Required!'),
-        sql_sever_database: Yup.string().required('Required!'),
-        sql_sever_username: Yup.string().required('Required!'),
-        sql_sever_password: Yup.string().required('Required!'),
+        accessDbPath: Yup.string().required('Required!'),
+        host: Yup.string().required('Required!'),
+        database: Yup.string().required('Required!'),
+        user: Yup.string().required('Required!'),
+        password: Yup.string().required('Required!'),
     });
 
-    const handleSubmit = (values) => {
-        console.log('Form values:', values);
+    const handleSubmit = async (values) => {
+        console.log(values, 'xcbhxscv');
+
+        // setloading(true);
+        try {
+            const response = await migrateAccessToPsql(values);
+
+            if (response?.status === 200) {
+                const successMessage = response?.data?.message || "Migration Successful!";
+                alert(successMessage);
+            } else {
+                const errorMessage = response?.data?.message || "Something went wrong!";
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred:", error);
+            alert(error?.response?.data?.message || "Failed to submit request. Please try later.");
+        }
     };
 
     return (
@@ -35,38 +53,38 @@ const Home = () => {
                     <Form className="p-5 md:p-20 lg:p-20 w-full md:w-2/3 bg-white rounded-md shadow-2xl">
                         <InputField
                             label="Access DB Path:"
-                            name="access_db_path"
+                            name="accessDbPath"
                             type="text"
                             placeholder="Enter Access DB Path"
-                            value={values?.access_db_path}
+                            value={values?.accessDbPath}
                         />
                         <InputField
                             label="SQL Sever Host:"
-                            name="sql_sever_host"
+                            name="host"
                             type="text"
                             placeholder="Enter SQL Sever Host"
-                            value={values?.sql_sever_host}
+                            value={values?.host}
                         />
                         <InputField
                             label="SQL Server Database:"
-                            name="sql_sever_database"
+                            name="database"
                             type="text"
                             placeholder="Enter SQL Server Database:"
-                            value={values?.sql_sever_database}
+                            value={values?.database}
                         />
                         <InputField
                             label="SQL Server Username:"
-                            name="sql_sever_username"
+                            name="user"
                             type="text"
                             placeholder="Enter SQL Server Username:"
-                            value={values?.sql_sever_username}
+                            value={values?.user}
                         />
                         <InputField
                             label="SQL Server Password:"
-                            name="sql_sever_password"
+                            name="password"
                             type="password"
                             placeholder="Enter SQL Server Password:"
-                            value={values?.sql_sever_password}
+                            value={values?.password}
                         />
                         <button
                             type="submit"
