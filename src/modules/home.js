@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../components/forms/inputFiled';
 import { migrateAccessToPsql } from '../components/apis/migrateApi';
 
 const Home = () => {
+    const [loading, setLoading] = useState(false);
     const initialValues = {
         accessDbPath: '',
         host: '',
@@ -24,8 +25,7 @@ const Home = () => {
 
     const handleSubmit = async (values) => {
         console.log(values, 'xcbhxscv');
-
-        // setloading(true);
+        setLoading(true);
         try {
             const response = await migrateAccessToPsql(values);
 
@@ -39,6 +39,8 @@ const Home = () => {
         } catch (error) {
             console.error("Error occurred:", error);
             alert(error?.response?.data?.message || "Failed to submit request. Please try later.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -89,7 +91,7 @@ const Home = () => {
                         <button
                             type="submit"
                             className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover mt-4" >
-                            Migrate
+                            {loading ? 'Loading' : 'Migrate'}
                         </button>
                     </Form>
                 )}
