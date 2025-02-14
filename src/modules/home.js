@@ -91,7 +91,7 @@ const Home = () => {
                         <button
                             type="submit"
                             className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover mt-4" >
-                            {loading ? 'Loading' : 'Migrate'}
+                            {loading ? 'Loading...' : 'Migrate'}
                         </button>
                     </Form>
                 )}
