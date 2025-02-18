@@ -13,7 +13,7 @@ function MainRoute() {
                 </Route> */}
 
                 {/* <Route element={<PrivateRoute />}> */}
-                <Route element={<AppLayout />}>
+                <Route >
                     <Route path="/" element={<Home />} />
                 </Route>
                 {/* </Route> */}

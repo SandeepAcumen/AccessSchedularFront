@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../components/forms/inputFiled';
 import { migrateAccessToPsql } from '../components/apis/migrateApi';
+import backgroundImage from '../assets/images/backgroundImg.webp';
 
 const Home = () => {
     const [loading, setLoading] = useState(false);
@@ -25,20 +26,14 @@ const Home = () => {
     });
 
     const handleSubmit = async (values) => {
-        console.log(values, 'xcbhxscv');
+        console.log(values, 'Form values');
         setLoading(true);
         try {
             const response = await migrateAccessToPsql(values);
-
-            if (response?.status === 200) {
-                const successMessage = response?.data?.message || "Migration Successful!";
-                alert(successMessage);
-            } else {
-                const errorMessage = response?.data?.message || "Something went wrong!";
-                alert(errorMessage);
-            }
+            const message = response?.data?.message || (response?.status === 200 ? "Migration Successful!" : "Something went wrong!");
+            alert(message);
         } catch (error) {
-            console.error("Error occurred:", error);
+            console.error("Error:", error);
             alert(error?.response?.data?.message || "Failed to submit request. Please try later.");
         } finally {
             setLoading(false);
@@ -46,68 +41,37 @@ const Home = () => {
     };
 
     return (
-        <div className="flex w-full overflow-auto justify-center items-center h-[91.5vh] px-5">
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {({ values, setFieldValue, errors, touched }) => (
-                    <Form className="p-5 w-full md:w-2/3 bg-white rounded-md shadow-2xl">
-                        <InputField
-                            label="Access DB Path:"
-                            name="accessDbPath"
-                            type="text"
-                            placeholder="Enter Access DB Path"
-                            value={values?.accessDbPath}
-                        />
-                        <InputField
-                            label="SQL Sever Host:"
-                            name="host"
-                            type="text"
-                            placeholder="Enter SQL Sever Host"
-                            value={values?.host}
-                        />
-                        <InputField
-                            label="SQL Server Database:"
-                            name="database"
-                            type="text"
-                            placeholder="Enter SQL Server Database:"
-                            value={values?.database}
-                        />
-                        <InputField
-                            label="SQL Server Username:"
-                            name="user"
-                            type="text"
-                            placeholder="Enter SQL Server Username:"
-                            value={values?.user}
-                        />
-                        <InputField
-                            label="SQL Server Password:"
-                            name="password"
-                            type="password"
-                            placeholder="Enter SQL Server Password:"
-                            value={values?.password}
-                        />
-                        <InputField
-                            label="Port Number:"
-                            name="port"
-                            type="number"
-                            disabled={true}
-                            placeholder="Enter Port Number:"
-                            value={values?.port}
-                        />
-                        <button
-                            type="submit"
-                            className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover mt-4" >
-                            {loading ? 'Loading...' : 'Migrate'}
-                        </button>
-                    </Form>
-                )}
-            </Formik>
+        <div className="flex flex-col md:flex-row h-screen w-full">
+            {/* Background Image for Mobile & Left Side Image for Desktop */}
+            <div
+                className="absolute md:relative w-full md:w-1/2 h-screen bg-cover bg-center"
+                style={{ backgroundImage: `url(${backgroundImage})` }}
+            />
+
+            {/* Form Container */}
+            <div className="relative z-10 w-full md:w-1/2 flex justify-center items-center p-5 h-screen bg-white bg-opacity-90 md:bg-opacity-100 md:bg-background">
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {({ values }) => (
+                        <Form className="p-5 w-full md:w-2/3 bg-white rounded-md shadow-2xl">
+                            <InputField label="Access DB Path:" name="accessDbPath" type="text" placeholder="Enter Access DB Path" value={values.accessDbPath} />
+                            <InputField label="PSQL Server Host:" name="host" type="text" placeholder="Enter PSQL Server Host" value={values.host} />
+                            <InputField label="PSQL Server Database:" name="database" type="text" placeholder="Enter PSQL Server Database" value={values.database} />
+                            <InputField label="PSQL Server Username:" name="user" type="text" placeholder="Enter PSQL Server Username" value={values.user} />
+                            <InputField label="PSQL Server Password:" name="password" type="password" placeholder="Enter PSQL Server Password" value={values.password} />
+                            <InputField label="Port Number:" name="port" type="number" disabled placeholder="Enter Port Number" value={values.port} />
+                            <button type="submit" className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover mt-4">
+                                {loading ? 'Loading...' : 'Migrate'}
+                            </button>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     );
 };
-
 
 export default Home;
