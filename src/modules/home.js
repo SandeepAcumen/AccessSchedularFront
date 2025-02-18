@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import InputField from '../components/forms/inputFiled';
 import { migrateAccessToPsql } from '../components/apis/migrateApi';
 import backgroundImage from '../assets/images/backgroundImg.webp';
+import successToast from '../components/toasts/successToast';
+import errorToast from '../components/toasts/errorToast';
 
 const Home = () => {
     const [loading, setLoading] = useState(false);
@@ -30,11 +32,10 @@ const Home = () => {
         setLoading(true);
         try {
             const response = await migrateAccessToPsql(values);
-            const message = response?.data?.message || (response?.status === 200 ? "Migration Successful!" : "Something went wrong!");
-            alert(message);
+            response?.data?.message || (response?.status === 200 ? successToast("Migration Successful!") : errorToast(response?.data?.message || "Something went wrong!"));
         } catch (error) {
             console.error("Error:", error);
-            alert(error?.response?.data?.message || "Failed to submit request. Please try later.");
+            errorToast(error?.response?.data?.message || "Failed to submit request. Please try later.");
         } finally {
             setLoading(false);
         }
@@ -64,7 +65,7 @@ const Home = () => {
                             <InputField label="PSQL Server Password:" name="password" type="password" placeholder="Enter PSQL Server Password" value={values.password} />
                             <InputField label="Port Number:" name="port" type="number" disabled placeholder="Enter Port Number" value={values.port} />
                             <button type="submit" className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover mt-4">
-                                {loading ? 'Loading...' : 'Migrate'}
+                                {loading ? 'Migrating...' : 'Migrate'}
                             </button>
                         </Form>
                     )}
