@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AppLayout from "../components/layouts/appLayout";
 import Home from "../modules/home";
+import { ToastContainer } from "react-toastify";
 
 
 function MainRoute() {
@@ -18,6 +19,7 @@ function MainRoute() {
                 </Route>
                 {/* </Route> */}
             </Routes>
+            <ToastContainer position="top-right" autoClose={3000} />
         </Router>
     );
 }

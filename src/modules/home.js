@@ -32,8 +32,7 @@ const Home = () => {
         setLoading(true);
         try {
             const response = await migrateAccessToPsql(values);
-            const message = response?.data?.message || "Migration Successful!";
-
+            const message = response?.data?.message || "Migration Successful!";    
             if (response?.status === 200) {
                 successToast(message);
             } else {
@@ -41,7 +40,7 @@ const Home = () => {
             }
         } catch (error) {
             console.error("Error:", error);
-            errorToast(error?.response?.data?.message || "Failed to submit request. Please try later.");
+            errorToast(error?.response?.data || "Failed to submit request. Please try later.");
         } finally {
             setLoading(false);
         }
