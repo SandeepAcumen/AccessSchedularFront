@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'http://192.168.29.91:3600';
+const API_URL = 'http://34.56.231.181';
 
 export const migrateAccessToPsql = async (data) => {
     return axios.post(`${API_URL}/api/migrate`, data,);
