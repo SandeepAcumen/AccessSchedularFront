@@ -4,14 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#AF2031",
+        primary: "#3B96DA",
         hover: "#E08095",
         active: "#1E40AF",
         border: "#2563EB",
-        background: "#FDEFEF",
+        background: "#EEEEEE",
         primaryText: "#FFFFFF",
-        gradientColorFrom: '#881421',
-        gradientColorTo: '#C94F60',
+        gradientColorFrom: '#9FC5E8',
+        gradientColorTo: '#0B5394',
       },
     },
   },
