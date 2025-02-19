@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../components/forms/inputFiled';
-import { migrateAccessToPsql } from '../components/apis/migrateApi';
 import backgroundImage from '../assets/images/backgroundImg.webp';
 import successToast from '../components/toasts/successToast';
 import errorToast from '../components/toasts/errorToast';
 import logo from '../assets/images/acumen_velocity_logo.jpg';
+import { useDispatch } from 'react-redux';
+import { migarteAccessAction } from '../redux/actions/migrateAction';
 
 const Home = () => {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const initialValues = {
         accessDbPath: '',
@@ -31,20 +33,19 @@ const Home = () => {
     const handleSubmit = async (values) => {
         console.log(values, 'Form values');
         setLoading(true);
-        try {
-            const response = await migrateAccessToPsql(values);
-            const message = response?.data?.message || "Migration Successful!";
-            if (response?.status === 200) {
-                successToast(message);
-            } else {
-                errorToast(message);
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            errorToast(error?.response?.data || "Failed to submit request. Please try later.");
-        } finally {
-            setLoading(false);
-        }
+        dispatch(migarteAccessAction(values, onSuccess, onError));
+    };
+
+    const onSuccess = (data) => {
+        console.log(data.data.message, 'data.message');
+        successToast(data.data.message);
+        setLoading(false);
+    };
+
+    const onError = (error) => {
+        console.error("migrate error:", error);
+        errorToast(error.data.message);
+        setLoading(false);
     };
 
     return (
