@@ -12,6 +12,8 @@ import { migarteAccessAction } from '../redux/actions/migrateAction';
 const Home = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState({ show: false, type: "success", message: "" });
+
     const initialValues = {
         accessDbPath: '',
         host: '',
@@ -30,22 +32,26 @@ const Home = () => {
         port: Yup.string().required('Required!'),
     });
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, { resetForm }) => {
         console.log(values, 'Form values');
         setLoading(true);
-        dispatch(migarteAccessAction(values, onSuccess, onError));
+        dispatch(migarteAccessAction(values, (data) => onSuccess(data, resetForm), (error) => onError(error, resetForm)));
     };
 
-    const onSuccess = (data) => {
+    const onSuccess = (data, resetForm) => {
         console.log(data.data.message, 'data.message');
-        successToast(data.data.message);
+        // successToast(data.data.message);
+        setModal({ show: true, type: "success", message: data.data.message })
         setLoading(false);
+        resetForm(); // Reset the form
     };
 
-    const onError = (error) => {
+    const onError = (error, resetForm) => {
         console.error("migrate error:", error);
-        errorToast(error.data.message);
+        // errorToast(error.data.message);
+        setModal({ show: true, type: "error", message: error.data.message })
         setLoading(false);
+        resetForm(); // Reset the form
     };
 
     return (
