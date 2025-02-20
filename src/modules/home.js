@@ -8,6 +8,7 @@ import errorToast from '../components/toasts/errorToast';
 import logo from '../assets/images/acumen_velocity_logo.jpg';
 import { useDispatch } from 'react-redux';
 import { migarteAccessAction } from '../redux/actions/migrateAction';
+import AlertModal from '../components/models/alertModel';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -97,6 +98,13 @@ const Home = () => {
                     </Formik>
                 </div>
             </div>
+            {modal.show && (
+                <AlertModal
+                    type={modal.type}
+                    message={modal.message}
+                    onClose={() => setModal({ ...modal, show: false })}
+                />
+            )}
         </div>
     );
 };
