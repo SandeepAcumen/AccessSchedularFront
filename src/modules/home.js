@@ -73,6 +73,7 @@ const Home = () => {
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
+                        enableReinitialize
                     >
                         {({ values }) => (
                             <Form className="p-5 w-full md:w-2/3 bg-white rounded-md shadow-2xl">
