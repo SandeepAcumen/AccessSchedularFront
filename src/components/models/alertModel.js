@@ -7,7 +7,7 @@ const AlertModal = ({ type, message, onClose }) => {
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
             <div className="relative w-full sm:w-11/12 md:w-2/3 lg:w-1/2 xl:w-2/5 min-w-[40%] max-w-xl bg-white rounded-lg shadow-xl border border-gray-200">
                 {/* Header Section */}
-                <div className={`flex items-center justify-between p-4 rounded-t-lg ${isSuccess ? "bg-green-500" : "bg-red-500"}`}>
+                <div className={`flex items-center justify-between p-4 rounded-t-lg bg-primary`}>
                     <div className="flex items-center space-x-2">
                         {isSuccess ? (
                             <CheckCircle size={24} className="text-white" />
