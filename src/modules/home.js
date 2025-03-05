@@ -13,7 +13,7 @@ import AlertModal from '../components/models/alertModel';
 const Home = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const [modal, setModal] = useState({ show: false, type: "success", message: "" });
+    // const [modal, setModal] = useState({ show: false, type: "success", message: "" });
 
     const initialValues = {
         accessDbPath: '',
@@ -41,16 +41,16 @@ const Home = () => {
 
     const onSuccess = (data, resetForm) => {
         console.log(data.data.message, 'data.message');
-        // successToast(data.data.message);
-        setModal({ show: true, type: "success", message: data.data.message })
+        successToast(data.data.message);
+        // setModal({ show: true, type: "success", message: data.data.message })
         setLoading(false);
         resetForm(); // Reset the form
     };
 
     const onError = (error, resetForm) => {
         console.error("migrate error:", error);
-        // errorToast(error.data.message);
-        setModal({ show: true, type: "error", message: error.data.message })
+        errorToast(error.data.message);
+        // setModal({ show: true, type: "error", message: error.data.message })
         setLoading(false);
         resetForm(); // Reset the form
     };
@@ -98,13 +98,13 @@ const Home = () => {
                     </Formik>
                 </div>
             </div>
-            {modal.show && (
+            {/* {modal.show && (
                 <AlertModal
                     type={modal.type}
                     message={modal.message}
                     onClose={() => setModal({ ...modal, show: false })}
                 />
-            )}
+            )} */}
         </div>
     );
 };
