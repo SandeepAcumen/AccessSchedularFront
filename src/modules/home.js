@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../components/forms/inputFiled';
@@ -9,11 +9,28 @@ import logo from '../assets/images/acumen_velocity_logo.jpg';
 import { useDispatch } from 'react-redux';
 import { migarteAccessAction } from '../redux/actions/migrateAction';
 import AlertModal from '../components/models/alertModel';
+import { socket } from '../redux/config';
 
 const Home = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     // const [modal, setModal] = useState({ show: false, type: "success", message: "" });
+    const [messages, setMessages] = useState([]);
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        // Scroll to the bottom whenever messages update
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    useEffect(() => {
+        socket.on("updated-status", (data) => {
+            console.log(data, "socket data");
+
+            setMessages((prev) => [...prev, data]);
+        });
+        return () => socket.off("updated-status");
+    }, []);
 
     const initialValues = {
         accessDbPath: '',
@@ -97,7 +114,17 @@ const Home = () => {
                         )}
                     </Formik>
                 </div>
+                <div className="overflow-auto max-h-40 h-full w-full text-start p-3 border">
+                    <ul>
+                        {messages.map((msg, index) => (
+                            <li key={index}>{JSON.stringify(msg)}</li>
+                        ))}
+                        {/* Invisible div to act as a scroll anchor */}
+                        <div ref={messagesEndRef} />
+                    </ul>
+                </div>
             </div>
+
             {/* {modal.show && (
                 <AlertModal
                     type={modal.type}
