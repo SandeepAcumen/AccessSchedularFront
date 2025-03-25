@@ -7,7 +7,7 @@ import successToast from '../components/toasts/successToast';
 import errorToast from '../components/toasts/errorToast';
 import logo from '../assets/images/acumen_velocity_logo.jpg';
 import { useDispatch } from 'react-redux';
-import { migarteAccessAction } from '../redux/actions/migrateAction';
+import { migarteAccessAction, stopSchedulerAction } from '../redux/actions/migrateAction';
 import AlertModal from '../components/models/alertModel';
 import { socket } from '../redux/config';
 
@@ -54,6 +54,12 @@ const Home = () => {
         console.log(values, 'Form values');
         setLoading(true);
         dispatch(migarteAccessAction(values, (data) => onSuccess(data, resetForm), (error) => onError(error, resetForm)));
+    };
+
+    const handleStopScheduler = () => {
+        dispatch(stopSchedulerAction({},
+            (data) => { setLoading(false); successToast(data.data.message) },
+            (error) => { setLoading(false); errorToast(error.data.message); }));
     };
 
     const onSuccess = (data, resetForm) => {
@@ -113,6 +119,11 @@ const Home = () => {
                             </Form>
                         )}
                     </Formik>
+                </div>
+                <div>
+                    <button disabled={loading} type="button" className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover mt-4" onClick={handleStopScheduler}>
+                        Stop Schedule Runner
+                    </button>
                 </div>
                 <div className="overflow-auto max-h-40 h-full w-full text-start p-3 border">
                     <ul>
